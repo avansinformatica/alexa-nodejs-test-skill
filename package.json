@@ -1,25 +1,28 @@
 {
-  "name": "test-skill",
-  "version": "1.0.0",
-  "description": "Test skill",
+  "name": "alexa-nodejs-avans-skill",
+  "version": "0.0.1",
+  "description": "Alexa skill to provide information about Avans",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Kenji776/AlexaTestSkill.git"
+    "url": "git+https://github.com/avansinformatica/alexa-nodejs-avans-skill.git"
   },
   "keywords": [
-    "test"
+    "Alexa",
+    "nodejs",
+    "skill"
   ],
-  "author": "Daniel Llewellyn",
-  "license": "MIT",
+  "author": "Robin Schellius",
+  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Kenji776/AlexaTestSkill/issues"
+    "url": "https://github.com/avansinformatica/alexa-nodejs-avans-skill/issues"
   },
-  "homepage": "https://github.com/Kenji776/AlexaTestSkill#readme",
+  "homepage": "https://github.com/avansinformatica/alexa-nodejs-avans-skill#readme",
   "dependencies": {
-    "alexa-app": "^2.3.2"
+    "alexa-app": "^4.0.1"
   }
 }
