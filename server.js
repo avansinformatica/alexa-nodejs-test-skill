@@ -33,8 +33,16 @@ app.intent('sayNumber', {
         var number = request.slot('number');
         response
             .say("You asked for the number " + number)
-            .shouldEndSession(false);
-    }
-);
+            .shouldEndSession(false, "Do you want another number?");
+    });
+
+app.intent("AMAZON.StopIntent", {
+    "slots": {},
+    "utterances": []
+}, function(request, response) {
+    var stopOutput = "Don't You Worry. I'll be back."
+    response.say(stopOutput)
+    return
+});
 
 module.exports = app;
