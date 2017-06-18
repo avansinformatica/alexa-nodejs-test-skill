@@ -6,8 +6,8 @@ var app = new alexa.app('test-skill');
 
 app.launch(function(request, response) {
     response
-        .say('Welcome to your test skill')
-        .reprompt('Way to go. You got it to run. Good job.')
+        .say('Welcome to your test skill. Say a number between one and one hundred, and I will echo it back to you.')
+        .reprompt('If you want me to say a number, you have to tell me which one...')
         .shouldEndSession(false);
 });
 
@@ -31,7 +31,9 @@ app.intent('sayNumber', {
     },
     function(request, response) {
         var number = request.slot('number');
-        response.say("You asked for the number " + number);
+        response
+            .say("You asked for the number " + number)
+            .shouldEndSession(false);
     }
 );
 
