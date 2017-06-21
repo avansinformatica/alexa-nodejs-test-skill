@@ -2,12 +2,16 @@ module.change_code = 1;
 'use strict';
 
 var alexa = require('alexa-app');
+var _ = require('lodash');
+
 var app = new alexa.app('test-skill');
+
+var reprompt = 'If you want me to say a number, you have to tell me which one...';
 
 app.launch(function(request, response) {
     response
         .say('Welcome to your test skill. Say a number between one and one hundred, and I will echo it back to you.')
-        .reprompt('If you want me to say a number, you have to tell me which one...')
+        .reprompt(reprompt)
         .shouldEndSession(false);
 });
 
@@ -31,9 +35,17 @@ app.intent('sayNumber', {
     },
     function(request, response) {
         var number = request.slot('number');
-        response
-            .say("You asked for the number " + number + ". ")
-            .shouldEndSession(false, "Do you want another number?");
+        if (_.isEmpty(number)) {
+            var prompt = 'I didn\'t hear a number. Ask me a number.';
+            response.say(prompt)
+                .reprompt(reprompt)
+                .shouldEndSession(false);
+            return true;
+        } else {
+            response
+                .say("You asked for the number " + number + ". ")
+                .shouldEndSession(false, "Do you want another number?");
+        }
     });
 
 app.intent("AMAZON.StopIntent", {
