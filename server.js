@@ -6,20 +6,20 @@ var _ = require('lodash');
 
 var app = new alexa.app('test-skill');
 
+var launchMsg = 'Welcome to your test skill. Say a number between one and one hundred, and I will echo it back to you.';
 var reprompt = 'If you want me to say a number, you have to tell me which one...';
+var errorMsg = 'Sorry, an error occured.';
 
 app.launch(function(request, response) {
     response
-        .say('Welcome to your test skill. Say a number between one and one hundred, and I will echo it back to you.')
+        .say(launchMsg)
         .reprompt(reprompt)
         .shouldEndSession(false);
 });
 
 app.error = function(exception, request, response) {
     console.log('exception = ' + exception)
-    console.log('request = ' + request);
-    console.log('response = ' + response);
-    response.say('Sorry an error occured ' + error.message);
+    response.say(errorMsg);
 };
 
 app.intent('sayNumber', {
@@ -73,6 +73,9 @@ app.intent('yesIntent', {
         }
     });
 
+// Amazon has specific intents that have to do with basic functionality of your skill that you 
+// must add. Some examples of this are AMAZON.HelpIntent, AMAZON.StopIntent, and 
+// AMAZON.CancelIntent. Here are examples of how you would specify these types of intents.    
 
 app.intent("AMAZON.StopIntent", {
     "slots": {},
@@ -82,9 +85,35 @@ app.intent("AMAZON.StopIntent", {
         "bye"
     ]
 }, function(request, response) {
-    var stopOutput = "Don't You Worry. I'll be back."
-    response.say(stopOutput)
-    return
+    var stopOutput = "Don't you worry. I'll be back.";
+    response.say(stopOutput);
+    return;
+});
+
+app.intent("AMAZON.HelpIntent", {
+    "slots": {},
+    "utterances": [
+        "help"
+    ]
+}, function(request, response) {
+    var helpOutput = "This skill will echo the number that you say. You can say any number between one and one hundred. You can also say stop or exit to quit.";
+    var reprompt = "What would you like to do?";
+    response
+        .say(helpOutput)
+        .reprompt(reprompt)
+        .shouldEndSession(false);
+    return;
+});
+
+app.intent("AMAZON.CancelIntent", {
+    "slots": {},
+    "utterances": [
+        "cancel"
+    ]
+}, function(request, response) {
+    var cancelOutput = "No problem. Request cancelled.";
+    response.say(cancelOutput);
+    return;
 });
 
 module.exports = app;
