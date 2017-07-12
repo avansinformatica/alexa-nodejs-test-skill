@@ -28,17 +28,19 @@ app.intent('sayNumber', {
         },
         "utterances": [
             // "say the number {1-100|number}",
-            // "give me the number {!-100|number}",
-            // "tell me the number {!-100|number}",
-            // "I want to hear you say the number {!-100|number}",
-            '{|I want} {|to} {|you} {|to} {|hear|tell|say|give} {|me} the number {!-100|number}'
+            // "give me the number {1-100|number}",
+            // "tell me the number {1-100|number}",
+            // '{|tell|give} {|me} the number {1-100|number}',
+            "I want to hear you say the number {1-100|number}",
+            '{|I want you to} {|tell|say|give} {|me} the number {1-100|number}',
         ]
     },
     function(request, response) {
         var number = request.slot('number');
         if (_.isEmpty(number)) {
-            var prompt = 'I didn\'t hear a number. Ask me a number.';
-            response.say(prompt)
+            var prompt = 'I didn\'t hear a number. Ask me a number and I\'ll echo it back.';
+            response
+                .say(prompt)
                 .reprompt(reprompt)
                 .shouldEndSession(false);
             return true;
@@ -49,28 +51,19 @@ app.intent('sayNumber', {
         }
     });
 
-app.intent('yesIntent', {
-        "slots": {
-            "yesResponse": "NUMBER"
-        },
+//
+// Built-in intent to handle a yes from the user.
+//
+app.intent('AMAZON.YesIntent', {
+        "slots": {},
         "utterances": [
-            // "I want to hear you say the number {!-100|number}",
-            '{|okay|yes|good|fine|allright|yesResponse}'
+            '{|okay|yes|allright}'
         ]
     },
     function(request, response) {
-        var answer = request.slot('yesResponse');
-        if (_.isEmpty(answer)) {
-            var prompt = 'I\'m sorry, I would like to hear a yes or a no.';
-            response.say(prompt)
-                .reprompt('Are you sure you\'re not going to answer me?')
-                .shouldEndSession(false);
-            return true;
-        } else {
-            response
-                .say("You said " + answer + ". ")
-                .shouldEndSession(false, "Do you want to say more?");
-        }
+        response
+            .say("You said yes.")
+            .shouldEndSession(false);
     });
 
 // Amazon has specific intents that have to do with basic functionality of your skill that you 
