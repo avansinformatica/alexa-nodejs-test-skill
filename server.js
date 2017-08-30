@@ -19,7 +19,10 @@ app.launch(function(request, response) {
 
 app.error = function(exception, request, response) {
     console.log('exception = ' + exception)
-    response.say(errorMsg);
+    response
+        .say(errorMsg)
+        .say(exception)
+        .shouldEndSession(false);
 };
 
 app.intent('sayNumber', {
@@ -32,7 +35,7 @@ app.intent('sayNumber', {
             // "tell me the number {1-100|number}",
             // '{|tell|give} {|me} the number {1-100|number}',
             "I want to hear you say the number {1-100|number}",
-            '{|I want you to} {|tell|say|give} {|me} the number {1-100|number}',
+            '{|I want you to} {|tell|say|give} {|me} {|the number} {1-100|number}',
         ]
     },
     function(request, response) {
