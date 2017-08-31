@@ -2,7 +2,7 @@ module.change_code = 1;
 'use strict';
 
 var alexa = require('alexa-app');
-var _ = require('lodash');
+var _ = require('underscore');
 
 var app = new alexa.app('test-skill');
 
@@ -21,7 +21,6 @@ app.error = function(exception, request, response) {
     console.log('exception = ' + exception)
     response
         .say(errorMsg)
-        .say(exception)
         .shouldEndSession(false);
 };
 
@@ -60,7 +59,7 @@ app.intent('sayNumber', {
 app.intent('AMAZON.YesIntent', {
         "slots": {},
         "utterances": [
-            '{|okay|yes|allright}'
+            'okay', 'yes', 'allright'
         ]
     },
     function(request, response) {
